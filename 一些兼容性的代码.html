@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>一些兼容性的代码</title>
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js"></script>
+	<style type="text/css">
+		body,html{
+			width: 100%;
+			height: 100%;
+		}
+		.box-svr-list li .high{
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<input  name="" id="demo" style="border:1px solid #ccc" value="">
+	<script type="text/javascript">
+		window.onload = function (){
+			var Global = {
+				// 各浏览器为元素添加事件处理程序 (ie8 ie7)
+				addEvent : function (ele,tyle,fn){
+					if (ele.addEventListener) {
+						ele.addEventListener(tyle,fn,false);
+					}else if(ele.attachEvent){
+						//ie低版本
+						ele.attachEvent("on"+tyle,fn);
+					}
+				},
+				// 阻止事件冒泡
+				stopPro : function (event){
+					var event = event || window.event;
+					if (event.stopPropagation) {
+						//w3c
+						event.stopPropagation();
+					}else {
+						//ie
+						event.cancelBubble = true;
+					}
+				},
+				// 判断是不是数组
+				isArray : function (value){
+					// ie9 以上
+					if (typeof Array.isArray === "function") {
+						return Array.isArray(value)
+					// ie9 以下
+					}else{
+						return Object.prototype.toString.call(value) === "[object Array]";
+					}
+				},
+				// 抛出错误 实例
+				throwErrow : function (ele){
+					if (ele && ele.getElementsByTagName) {
+						return ele.getElementsByTagName("div");
+					}else{
+						throw new Error("throwErrow() : Argument must be a Dom Element");
+					}
+				},
+				// 添加class 或者抛出错误
+				addClass : function (ele , className){
+					// 如果,ele 为空 或者ele的className 不是字符串类型
+					if (!ele || typeof ele.className != "string") {
+						throw new Error("addClass():ele must be a dom Element");
+					}else{
+						ele.className += " "+className;
+					}
+				},
+				// 删除class 
+				removeClass : function (ele , className){
+
+					// 如果,ele 为空 或者ele的className 不是字符串类型 它就不是dom元素
+					if (!ele || typeof ele.className != "string") {
+						throw new Error("removeClass():ele must be a dom Element");
+					}else{
+						var arr = ele.className.split(/s+?/);
+						for(var i = 0 , len = arr.length ; i < len ; i ++){
+							if (arr[i] == className) {
+
+								// 如果找到这个className 就删除这个元素
+								arr.splice(i, 1);
+							}
+						}
+						ele.className = arr.join("");
+					}
+				},
+				// 构建一个简化版的 forEach
+				forEach : function (list,callback){
+					for(var i = 0 ; i < list.length ; i ++){
+						callback.call(list[i],i);
+					}
+				},
+				// 配合apply(数组) 和 call(参数列表) 
+				juggle : function (){
+					var result = 0;
+					for(var i = 0 , len = arguments.length ; i < len ; i ++){
+						result += arguments[i];
+					}
+					this.result = result;
+				},
+				// 判断是否是ie浏览器
+				isIE : function (){
+					return navigator.userAgent.indexOf("MSIE") > -1;
+				},
+				// 判断参数有没有传
+				isArgument : function (argu){
+					// 没传 do..
+					if (typeof argu === "undefined") {
+						//do
+					}else{
+						//do
+					}
+				}
+				
+			}
+			// 研究forEach 用法
+			// arr = ["x","c","x","c","c"];
+			// console.log(Global.forEach(arr,function (index){
+			// 	console.log(index);
+			// }))
+			/* apply 和call 的用法
+			* var apply = {},
+			*	call = {};
+			* Global.juggle.apply(apply,[1,2,3,4,5,6]);
+			* console.log(apply);
+			* Global.juggle.call(call,1,2,3,4,5,6,7);
+			* console.log(call);
+			*/
+			/* 
+			var person = {
+				name : "xiaocheng",
+				age : 23
+			}
+			// 检测是否为对象, 再检查是不是实例属性 在doSomeThing();
+			if ("hasOwnProperty" in person && person.hasOwnProperty("name")) {
+				console.log("a");
+			}
+			*/
+			// 创建一个动物对象 默认体重40 age 10   （基于对象的继承）
+			/*
+			var animal  = {
+				weight : 40,
+				age : 10
+			}
+			// ie8 及以下不支持
+			var elephant  = Object.create(animal,{
+				weight : {
+					value : 100
+				}
+			});
+			console.log(elephant.weight);
+			*/
+		}
+	</script>
+</body>
+</html>

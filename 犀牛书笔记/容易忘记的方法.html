@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>一些容易忘记的常见方法简单方法</title>
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js"></script>
+	<script type="text/javascript">
+		var xc = {
+			// 数组反转
+			arrReverse : function (arr){
+				return arr.reverse();
+			},
+			// 判断两数组是否相等
+		    arrEqual : function (arr1,arr2){
+		    	if ( arr1.length != arr2.length ) {
+		    		return false;
+		    	}
+		    	for( var i = 0 , len = arr1.length ; i < len ; i ++ ){
+		    		if ( arr1[i] !== arr2[i]) {	
+		    			return false;
+		    		}
+		    	}
+		    	return true;
+			},
+			// 返回平方 this 作用域
+			points : {
+				0 : 3,
+				1 : 4,
+				dist : function (){
+					var p1 = this[0];
+					var p2 = this[1];
+					return Math.sqrt(p1*p1+p2*p2);
+				}
+			},
+			// 阶乘 
+			factorial : function(num){
+				var result = 1;
+				while (num > 1) {
+					result *= num;
+					num --;
+				}
+				return result;
+			},
+			// 页面跳转
+			moveon : function(){
+				var message = confirm("准备跳转页面了吗?");
+				if (message) {
+					window.location = "http://www.baidu.com";
+				}
+			},
+			// debug
+			debug : function (msg){
+				var log = document.getElementById("debuglog");
+				if (!log) {
+					var div = document.createElement("div");
+					div.id = "debuglog";
+					div.innerHTML = "<h1>Debug Log</h1>";
+					document.body.appendChild(div);
+				}else{
+					var pre = document.createElement("pre");
+					var text = document.createTextNode(msg);
+					pre.appendChild(text);
+					log.appendChild(pre);
+				}
+			},
+			// 隐藏元素的两种方法  还有 opacity
+			hide : function (ele,reflow){
+				if (reflow) {
+					ele.style.display = "none";
+				}else{
+					ele.style.visibility = "hidden";
+				}
+			},
+			// 添加事件
+			addEvent : function (ele,type,fn){
+				if(ele.addEventListener){
+					ele.addEventListener(type,fn,false);
+				}else{
+					ele.attachEvent("on"+type,fn);
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function (){
+			var i = 0;
+			mainload:while (i<10) {
+				if (i==5) {
+					i++;
+					continue mainload;
+				}
+				console.log(i);
+				i++;
+			}
+		}
+	</script>
+</body>
+</html>
